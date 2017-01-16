@@ -1,4 +1,3 @@
-// Button animations
 $(document).ready(function(){
   setDisplay(0);
   $('a').click(function(){
@@ -9,112 +8,117 @@ $(document).ready(function(){
   });
 });
 
-// Calculator Functionality
-let answer = 0;
-let num1, num2;
-let display = document.querySelector('input');
-let bool = false;
-let operator = '';
+var answer=0;
+var num1,num2;
+var display = document.querySelector('input');
+var isCalculating = false;
+var operator = '';
 
-let setDisplay = function(num){
-  if (bool === true){
+var setDisplay = function(num){
+  if(isCalculating === true){
     display.value = answer;
   }
-  else {
-    if (display.value === '0')
+  else{ 
+    if(display.value === '0'){
       display.value = num;
-    else
+    }
+    else{
       display.value += num;
+    }
+     
   }
 }
 
-let clicked = document.querySelector('body');
+var clicked = document.querySelector('body');
 clicked.addEventListener('click', evt => {
-  let btnValue = parseInt(evt.target.innerHTML);
-  console.log(operator);
-  if (bool === true){
+  var btnValue = parseInt(evt.target.innerHTML);
+  if(isCalculating === true){
     display.value = '';
-    bool = false;
+    isCalculating = false;
   }
-  if (Number.isInteger(btnValue)){
+  if(Number.isInteger(btnValue)){
     setDisplay(btnValue);
-  } else {
+  }
+  else{
     setDisplay('');
-    doIt(evt.target.innerHTML);
+    doIt(evt.target.innerHTML)
   }
 });
 
-let doIt = symbol => {
+var doIt = symbol => {
   switch (symbol){
-    case 'C':
-      clear();
+    case 'C': clear();
+              break;
+      
+    case '=': if(operator !== ''){
+      num2 = display.value;
+      calculate();
+    }
       break;
-    case '=':
-      if (operator !== ''){
-        num2 = display.value;
-        calculate();
-      }
-      break;
-    case '+':
-    case 'x':
-    case '-':
-    case '/':
-      if (operator === ''){
+      
+     case '+':
+     case 'x':
+     case '-':
+     case '/':
+      if(operator === ''){
         num1 = display.value;
         operator = symbol;
-        bool = true;
-      } else {
+        isCalculating = true;;
+      }
+      else {
         num2 = display.value;
         operator = symbol;
         calculate();
       }
       break;
-    case '.':
+      
+      case '.':
       decimal();
       break;
-    case '=':
-      equals();
-      break;
-  }
+     }
 };
 
 let clear = () => {
   answer = 0;
-  bool = false;
+  isCalculating = false;
   operator = '';
   display.value = answer;
-};
-
-let add = () => {
-  num1 = display.value;
-  
-};
-
-let calculate = () => {
-  num1 = parseFloat(num1);
-  num2 = parseFloat(num2);
-  
-  switch (operator){
-    case '+':
-      answer = num1 + num2;
-      break;
-    case '-':
-      answer = num1 - num2;
-      break;
-    case 'x':
-      answer = num1 * num2;
-      break;
-    case '/':
-      answer = num1 / num2;
-      break;
-    case '=':
-  }
-  bool = true;
-  setDisplay(answer);
-  num1 = answer;
-  num2 = undefined;
 };
 
 let decimal = () => {
   if (display.value.indexOf('.') === -1) setDisplay('.');
 };
+
+
+var calculate = function(){
+  num1=parseFloat(num1);
+  num2=parseFloat(num2);
+  
+  switch (operator){
+      
+      case '+': 
+      answer = num1 + num2;
+      break;
+      
+      case 'x': 
+      answer = num1 * num2;
+      break;
+      
+      case '-': 
+      answer = num1 - num2;
+      break;
+      
+      case '/': 
+      answer = num1 / num2;
+      break;
+      
+      case '=':
+                 }
+  isCalculating = true;
+  setDisplay(answer);
+  num1 = answer;
+  num2 = undefined;
+};
+
+
+  
