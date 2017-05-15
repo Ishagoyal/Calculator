@@ -1,20 +1,14 @@
-$(document).ready(function(){
-  setDisplay(0);
-  $('a').click(function(){
-    $(this).addClass('active');
-    $(this).one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(evt){
-      $(this).removeClass('active') ;
-    });
-  });
-});
 
+
+window.onload = function () {
 var answer=0;
 var num1,num2;
 var display = document.querySelector('input');
+//console.log(display);
 var isCalculating = false;
 var operator = '';
 
-var setDisplay = function(num){
+function setDisplay(num){
   if(isCalculating === true){
     display.value = answer;
   }
@@ -28,8 +22,19 @@ var setDisplay = function(num){
      
   }
 }
+$(document).ready(function(){
+  setDisplay(0);
+  $('a').click(function(){
+    $(this).addClass('active');
+    $(this).one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(evt){
+      $(this).removeClass('active') ;
+    });
+  });
+});
+
 
 var clicked = document.querySelector('body');
+//console.log(clicked);
 clicked.addEventListener('click', evt => {
   var btnValue = parseInt(evt.target.innerHTML);
   if(isCalculating === true){
@@ -119,6 +124,8 @@ var calculate = function(){
   num1 = answer;
   num2 = undefined;
 };
+}
+
 
 
   
